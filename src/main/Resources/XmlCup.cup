@@ -1,0 +1,211 @@
+package com.server.xmlflexcup;
+
+import java_cup.runtime.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import com.server.errores.Errores;
+
+parser code {:
+        List<String> parametros=List.of("ID","USUARIO_CREACION","FECHA_CREACION","FECHA_MODIFICACION","USUARIO_MODIFICACION","TITULO","SITIO","PADRE","PAGINA","CLASE");
+        List<String> clases=List.of("TITULO","PARRAFO","IMAGEN","VIDEO","MENU");
+        List<String> action=List.of("NUEVO_SITIO_WEB","BORRAR_SITIO_WEB","NUEVA_PAGINA","BORRAR_PAGINA","MODIFICAR_PAGINA","AGREGAR_COMPONENTE","BORRAR_COMPONENTE","MODIFICAR_COMPONENTE");
+        List<String> atributos=List.of("TEXTO","ALINEACION","COLOR","ORIGEN","ALTURA","ANCHO","PADRE","ETIQUETAS");
+       public static LinkedList<Errores> erroresSintacticos=new LinkedList();
+       public static boolean isError=false;
+    //public static List<String> col= new ArrayList<>();
+   // public static List<String> path= new ArrayList<>();
+   // public static List<String> cond= new ArrayList<>();
+   // public static List<String> valores= new ArrayList<>();
+    // Connect this parser to a scanner!
+    public parser(XmlAnalyzer lex) {
+	    super(lex);
+	  }
+
+
+    public void syntax_error(Symbol s) {
+           String lexema=s.value.toString();
+           int columna=s.right;
+           int fila=s.left;
+           System.out.println("Error en lexema: "+lexema+" en columna: "+columna+" y fila: "+fila);
+
+        }
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception {
+           String lexema=s.value.toString();
+           int columna=s.right;
+           int fila=s.left;
+           Errores er=new Errores(lexema,"Error sintactico","No se esperaba ese tokenn",fila,columna);
+
+           erroresSintacticos.add(er);
+    }
+
+    public void textParam(String text, String name, int left, int right) {
+      if (!text.startsWith("[") && !text.endsWith("]")) {
+        isError = true;
+        System.out.println("Error en lexema: " + text + " en columna: " + left + " y fila: " + right);
+        Errores er = new Errores(text, "Error sintactico", "No se esperaba ese tokenn", left, right);
+        erroresSintacticos.add(er);
+      } else {
+        if (!name.equals(name.toUpperCase())) {
+        System.out.println("Error en lexema: " + name + " en columna: " + left + " y fila: " + right+" Debe ser mayuscula");
+        Errores er = new Errores(name, "Error sintactico", "No se esperaba ese tokenn", left, right);
+        erroresSintacticos.add(er);
+         isError = true;
+        } else {
+          int ind = name.lastIndexOf('\"');
+          name = name.substring(1, ind);
+          if(!parametros.contains(name)){
+          isError=true;
+          System.out.println("Error en lexema: " + name + " en columna: " + left + " y fila: " + right+" El parametro no existe");
+                Errores er = new Errores(name, "Error ", "parametro no existe", left, right);
+                erroresSintacticos.add(er);
+          }
+
+          if (name.equals("\"ID\"")) {
+            int index = text.indexOf("]");
+            text = text.substring(1, index);
+            String patron = "^[$\\-_][a-zA-Z0-9$\\-_]+";
+            Pattern pattern = Pattern.compile(patron);
+            Matcher matcher = pattern.matcher(text);
+            if(!matcher.matches()){
+              System.out.println("Error en lexema: " + text + " en columna: " + left + " y fila: " + right);
+              Errores er = new Errores(name, "Error sintactico", "No se esperaba ese tokenn", left, right);
+              erroresSintacticos.add(er);
+              isError=true;
+            }
+
+          }
+        }
+
+      }
+    }
+
+
+     public void textAttr(String text, String name, int left, int right) {
+        if (!text.startsWith("[") && !text.endsWith("]")) {
+          isError = true;
+          System.out.println("Error en lexema: " + text + " en columna: " + left + " y fila: " + right);
+          Errores er = new Errores(text, "Error sintactico", "No se esperaba ese tokenn", left, right);
+          erroresSintacticos.add(er);
+        } else {
+          if (!name.equals(name.toUpperCase())) {
+            System.out.println("Error en lexema: " + name + " en columna: " + left + " y fila: " + right+" Debe ser mayuscula");
+          Errores er = new Errores(name, "Error sintactico", "No se esperaba ese tokenn", left, right);
+          erroresSintacticos.add(er);
+           isError = true;
+          } else {
+            int ind = name.lastIndexOf('\"');
+            name = name.substring(1, ind);
+                  if(!atributos.contains(name)){
+                  isError=true;
+                  System.out.println("Error en lexema: " + name + " en columna: " + left + " y fila: " + right+" El atributo no existe");
+                        Errores er = new Errores(name, "Error ", "atributo no existe", left, right);
+                        erroresSintacticos.add(er);
+                  }
+            if (name.equals("\"COLOR\"")) {
+              int index = text.indexOf("]");
+              text = text.substring(1, index);
+              String color = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
+              Pattern pattern = Pattern.compile(color);
+              Matcher matcher = pattern.matcher(text);
+              if(!matcher.matches()){
+                System.out.println("Error en lexema: " + text + " en columna: " + left + " y fila: " + right+" debe tener formato hexadecimal");
+                Errores er = new Errores(name, "Error sintactico", "No se esperaba ese tokenn", left, right);
+                erroresSintacticos.add(er);
+                isError=true;
+              }
+
+            }
+          }
+
+        }
+      }
+
+      public void actionManage(String act, int left, int right) {
+        if (!act.equals(act.toUpperCase())) {
+          System.out.println("Error en lexema: " + act + " en columna: " + left + " y fila: " + right + " Debe ser mayuscula");
+          Errores er = new Errores(act, "Error sintactico", " debe ser mayuscula ", left, right);
+          erroresSintacticos.add(er);
+          isError = true;
+        } else {
+          int ind = act.lastIndexOf('\"');
+          act = act.substring(1, ind);
+          if (!action.contains(act)) {
+            isError = true;
+            System.out.println("Error en lexema: " + act + " en columna: " + left + " y fila: " + right + " esta accion no existe");
+            Errores er = new Errores(act, "Error ", "esta accion no existe", left, right);
+            erroresSintacticos.add(er);
+          }
+
+
+        }
+      }
+:}
+
+/* Terminals (tokens returned by the scanner). */
+terminal             ACCIONES,ACCION,NOMBRE,PARAMETROS,PARAMETRO,ETIQUETAS,ETIQUETA,ATRIBUTOS,ATRIBUTO,TEXTO,VALOR;
+terminal            STRING,IGUAL,MAY,MEN,CIERRE;
+
+
+
+/* Non-terminals */
+non terminal     xml_validator,accionn, execution,xmlother,parametros,atributos,etiquetas,xparametro,xatributo,xetiqueta,param,mosatr, eti,atr,accionnes;
+
+non terminal String mospar;
+
+/* The grammar */
+
+
+start with xml_validator;
+
+
+xml_validator::=MEN ACCIONES MAY accionnes MEN CIERRE ACCIONES MAY
+            |accionnes
+            ;
+
+accionnes::=accionnes accionn
+            |accionn;
+accionn::= MEN ACCION NOMBRE IGUAL STRING:s MAY execution:e MEN CIERRE ACCION MAY {: 	 actionManage(s.toString(),sleft,sright);:};
+
+execution::= execution xmlother
+            |xmlother;
+
+
+xmlother::=parametros
+            |atributos
+            |etiquetas;
+
+parametros::=MEN PARAMETROS MAY xparametro MEN CIERRE PARAMETROS MAY;
+atributos::=MEN ATRIBUTOS MAY xatributo MEN CIERRE ATRIBUTOS MAY;
+etiquetas::=MEN ETIQUETAS MAY xetiqueta MEN CIERRE ETIQUETAS MAY;
+
+xparametro::=xparametro param
+            |param;
+param::=MEN PARAMETRO NOMBRE IGUAL STRING:s MAY mospar:t MEN CIERRE PARAMETRO MAY{:
+                                                                                          textParam(t,s.toString(), sleft, sright);
+                                                                                    :};
+
+mospar::= TEXTO:t{:
+                   String dato=t.toString();
+                   RESULT=dato;
+                :};
+
+xatributo::=xatributo atr
+            |atr;
+atr::=MEN ATRIBUTO NOMBRE IGUAL STRING:s MAY mosatr:t MEN CIERRE ATRIBUTO MAY{:
+                                                                                textAttr(t.toString(),s.toString(),sleft,sright);
+                                                                              :};
+mosatr::= TEXTO:t{:String dato=t.toString();
+                    RESULT=dato;
+                    :};
+
+
+xetiqueta::=xetiqueta eti
+            |eti;
+eti::=MEN ETIQUETA VALOR IGUAL STRING:s CIERRE MAY {:System.out.println("Etiqueta "+s);:}
+        ;
+
+
+
