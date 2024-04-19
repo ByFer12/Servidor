@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<sitiosWeb>
+    <SITIO ID="_Pag1">
+        <datosUsuario>
+            <USUARIO_CREACION>Fernando</USUARIO_CREACION>
+            <FECHA_CREACION>2024-04-18</FECHA_CREACION>
+            <FECHA_MODIFICACION>2024-04-18</FECHA_MODIFICACION>
+            <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
+        </datosUsuario>
+        <paginas>HOla
+            <pagina ID="$Index">
+                <parametros>
+                    <SITIO>_Pag1</SITIO>
+                    <PADRE>Index</PADRE>
+                    <TITULO>Primera Web</TITULO>
+                    <USUARIO_CREACION>Byron Torres</USUARIO_CREACION>
+                    <FECHA_CREACION>2024-04-18</FECHA_CREACION>
+                    <FECHA_MODIFICACION>2024-04-18</FECHA_MODIFICACION>
+                    <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
+                </parametros>
+                <etiquetas>
+                    <etiqueta>etiqueta1</etiqueta>
+                    <etiqueta>etiqueta2</etiqueta>
+                    <etiqueta>etiqueta3</etiqueta>
+                </etiquetas>
+                <pagina ID="$URL">
+                    <parametros>
+                        <SITIO>_Pag1</SITIO>
+                        <PADRE>$Index</PADRE>
+                        <TITULO>Pagina del cunoc</TITULO>
+                        <USUARIO_CREACION>Fernando Torres</USUARIO_CREACION>
+                        <FECHA_CREACION>2024-04-18</FECHA_CREACION>
+                        <FECHA_MODIFICACION>2024-04-18</FECHA_MODIFICACION>
+                        <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
+                    </parametros>
+                    <etiquetas>
+                        <etiqueta>Cursos</etiqueta>
+                        <etiqueta>Notas</etiqueta>
+                        <etiqueta>Mate</etiqueta>
+                    </etiquetas>
+                    <componentes ID="_comp-1">
+                        <parametros>
+                            <PAGINA>$URL</PAGINA>
+                            <CLASE>TITULO</CLASE>
+                        </parametros>
+                        <atributos>
+                            <TEXTO>Este es el texto que aparece en el titulo :)</TEXTO>
+                            <COLOR>#5A5A5A</COLOR>
+                        </atributos>
+                    </componentes>
+                </pagina>
+                <componentes ID="_comp-1">
+                    <parametros>
+                        <PAGINA>$Index</PAGINA>
+                        <CLASE>TITULO</CLASE>
+                    </parametros>
+                    <atributos>
+                        <TEXTO>Este es el texto que aparece en el titulo :)</TEXTO>
+                        <COLOR>#5A5A5A</COLOR>
+                    </atributos>
+                </componentes>
+            </pagina>
+        </paginas>
+    </SITIO>
+    <SITIO ID="$MOMOS">
+        <datosUsuario>
+            <USUARIO_CREACION>Fernando</USUARIO_CREACION>
+            <FECHA_CREACION>2024-04-18</FECHA_CREACION>
+            <FECHA_MODIFICACION>2024-04-18</FECHA_MODIFICACION>
+            <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
+        </datosUsuario>
+        <paginas>HOla
+            <pagina ID="$URL">
+                <parametros>
+                    <SITIO>$MOMOS</SITIO>
+                    <PADRE>$Index</PADRE>
+                    <TITULO>Pagina del cunoc</TITULO>
+                    <USUARIO_CREACION>Fernando Torres</USUARIO_CREACION>
+                    <FECHA_CREACION>2024-04-18</FECHA_CREACION>
+                    <FECHA_MODIFICACION>2024-04-18</FECHA_MODIFICACION>
+                    <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
+                </parametros>
+                <etiquetas>
+                    <etiqueta>Cursos</etiqueta>
+                    <etiqueta>Notas</etiqueta>
+                    <etiqueta>Mate</etiqueta>
+                </etiquetas>
+                <pagina ID="$MARIANO">
+                    <parametros>
+                        <SITIO>$MOMOS</SITIO>
+                        <PADRE>$URL</PADRE>
+                        <TITULO>Pagina del cunoc</TITULO>
+                        <USUARIO_CREACION>Fernando Torres</USUARIO_CREACION>
+                        <FECHA_CREACION>2024-04-18</FECHA_CREACION>
+                        <FECHA_MODIFICACION>2024-04-18</FECHA_MODIFICACION>
+                        <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
+                    </parametros>
+                    <etiquetas>
+                        <etiqueta>Cursos</etiqueta>
+                        <etiqueta>Notas</etiqueta>
+                        <etiqueta>Mate</etiqueta>
+                    </etiquetas>
+                </pagina>
+            </pagina>
+        </paginas>
+    </SITIO>
+</sitiosWeb>

@@ -7,8 +7,7 @@
 package com.server.xmlflexcup;
 
 import java_cup.runtime.*;
-import java.util.LinkedList;
-import com.server.errores.Errores;
+import java.util.ArrayList;
 
 @SuppressWarnings("fallthrough")
 public class XmlAnalyzer implements java_cup.runtime.Scanner {
@@ -310,7 +309,8 @@ public class XmlAnalyzer implements java_cup.runtime.Scanner {
   private boolean zzEOFDone;
 
   /* user code: */
-    public static LinkedList<Errores> erroresLexicos=new LinkedList<>();
+    public static ArrayList<String> erroresLexicos=new ArrayList();
+
   public static String mensajeErrorLexico;
 
   private Symbol symbol(int type) {
@@ -751,9 +751,10 @@ public class XmlAnalyzer implements java_cup.runtime.Scanner {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
             { System.out.println("Error lexico: en linea: "+yyline+ " Columna: "+yycolumn+" "+yytext());
-        Errores e=new Errores(yytext(),"Error Lexico", "Token es reconocido",yyline,yycolumn);
-        erroresLexicos.add(e);
+
+
         mensajeErrorLexico="Error Lexico, token no reconocido: "+yytext()+" en fila: "+yyline+" y columna: "+yycolumn;
+        erroresLexicos.add(mensajeErrorLexico);
             }
           // fall through
           case 19: break;

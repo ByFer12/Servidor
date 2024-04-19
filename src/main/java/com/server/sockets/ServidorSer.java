@@ -22,37 +22,58 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ServidorSer implements Runnable{
-    
+    ManageActions actionsss;
     private Socket con;
+    public static String usuario;
     public static String messege;
     public static ArrayList<String>errors=new ArrayList<>();
+    public static ArrayList<String>mensajes=new ArrayList<>();
     private String error;
 
     public ServidorSer(Socket con){
         this.con=con;
+        actionsss=new ManageActions();
     }
     
     @Override
     public void run(){
         try {
             ObjectInputStream entrada=new ObjectInputStream(con.getInputStream());
+            ObjectOutputStream salida=new ObjectOutputStream(con.getOutputStream());
             messege=(String)entrada.readObject();
-            //System.out.println("Mensaje del cliente: "+messege);
+            usuario=(String) entrada.readObject();
+            messege=messege.trim();
+            System.out.println("Usuario: "+usuario);
+
+
             if(messege.endsWith(">")){
+               // System.out.println(newMessege);
                 XmlAnalyzer flex=new XmlAnalyzer(new BufferedReader(new StringReader(messege)));
                 parser p=new parser(flex);
                 p.parse();
-                validar(messege);
+
+                if(parser.erroresSintacticos.isEmpty() &&XmlAnalyzer.erroresLexicos.isEmpty()){
+                    validar(messege);
+                }
             }else{
                 error="Error en la sintaxis, falta cierre de > en el ultimo tag";
                 System.out.println(error);
                 errors.add(error);
             }
+            salida.writeObject(errors);
+            salida.writeObject(parser.erroresSintacticos);
+            salida.writeObject(XmlAnalyzer.erroresLexicos);
+            salida.writeObject(mensajes);
+            errors.clear();
+            parser.erroresSintacticos.clear();
+            XmlAnalyzer.erroresLexicos.clear();
+            mensajes.clear();
             con.close();
-        } catch (IOException |ClassNotFoundException ex) {
+        } catch (IOException |ClassNotFoundException  ex) {
+            ex.printStackTrace();
             System.out.println("No se encontro clientes...");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+           e.printStackTrace();
         }
     }
 
@@ -70,7 +91,7 @@ public class ServidorSer implements Runnable{
             XPath xpath=xpathFactory.newXPath();
 
             // Obtener la lista de nodos de acción
-            XPathExpression accionExpresion= xpath.compile("//*[local-name()='accion']");
+            XPathExpression accionExpresion= xpath.compile("//*[translate(local-name(), 'ACCION', 'accion') = 'accion']");
             NodeList accionNodos=(NodeList) accionExpresion.evaluate(doc, XPathConstants.NODESET);
             System.out.println("Numero de acciones: "+accionNodos.getLength());
 
@@ -84,7 +105,7 @@ public class ServidorSer implements Runnable{
                 Map<String, String>parametros=getParametros(xpath, doc, acctionNodo);
                 System.out.println("Parametros: ");
                 for(Map.Entry<String, String>entidad:parametros.entrySet()){
-                    System.out.println(" "+entidad.getKey()+" "+entidad.getValue());
+                    System.out.println(" "+entidad.getKey()+" = "+entidad.getValue());
                 }
 
                 //Procesamos Etiquetas
@@ -103,14 +124,20 @@ public class ServidorSer implements Runnable{
                 }
 
                 System.out.println(" ");
+                if(!parser.isError){
+                    System.out.println("se esta procesando....................");
+                    procesar(nombreAccion, parametros,tags,attr);
+                }
 
             }
-
-
                    }catch (Exception e){
-                    e.printStackTrace();
+                    error=e.getMessage();
+            System.out.println(error);
+            errors.add(error);
+                    //e.printStackTrace();
         }
     }
+
 
     private static Map<String,String> getParametros(XPath xpath, Document doc, Node nodo) throws Exception{
         Map<String, String> parameters = new HashMap<>();
@@ -120,6 +147,9 @@ public class ServidorSer implements Runnable{
             Node parameterNode = parameterNodes.item(j);
             String parameterName = parameterNode.getAttributes().getNamedItem("nombre").getNodeValue();
             String parameterValue = parameterNode.getTextContent();
+            int index = parameterValue.indexOf("]");
+            int index2 = parameterValue.indexOf("[");
+            parameterValue = parameterValue.substring(index2+1, index);
             parameters.put(parameterName, parameterValue);
         }
         return parameters;
@@ -144,9 +174,117 @@ public class ServidorSer implements Runnable{
             Node nodoAttr=listaAttr.item(i);
             String clave=nodoAttr.getAttributes().getNamedItem("nombre").getNodeValue();
             String valor = nodoAttr.getTextContent();
+            int index = valor.indexOf("]");
+            int index2 = valor.indexOf("[");
+            valor = valor.substring(index2+1, index);
             attr.put(clave,valor);
         }
         return attr;
+    }
+
+    public void procesar(String accion, Map<String, String>parametros,Map<Integer, String>tags,Map<String, String>attr){
+        switch (accion){
+            case "NUEVO_SITIO_WEB":
+                String v=parametros.get("ID");
+                String r="\n+";
+                if(attr.isEmpty() &&tags.isEmpty()){
+                    if(parametros.containsKey("ID")&&!v.matches(r)){
+                    actionsss.newSitio(accion,parametros);
+                    }else{
+                        error="El ID debe ser obligatorio";
+                        System.out.println(error);
+                        errors.add(error);
+                    }
+                }else{
+                    error="Al crear sitios no debes mandar atributos ni etiquetas ";
+                    System.out.println(error);
+                    errors.add(error);
+                }
+                break;
+            case "BORRAR_SITIO_WEB":
+                System.out.println("Estamos en borrar");
+                String a=parametros.get("ID");
+                String b="\n+";
+                if(attr.isEmpty() &&tags.isEmpty()){
+                    if(parametros.containsKey("ID")&&!a.matches(b)){
+                        if(parametros.size()==1){
+
+                            actionsss.deleteSitio(accion,parametros);
+                        }else{
+                            error="Solo se necesita el ID, no mas parametros";
+                            System.out.println(error);
+                            errors.add(error);
+                        }
+                    }else{
+                        error="El ID debe ser obligatorio por tratarse de Borrar sitio";
+                        System.out.println(error);
+                        errors.add(error);
+                    }
+                }else{
+                    error="Al Borrar sitios no debes mandar atributos ni etiquetas ";
+                    System.out.println(error);
+                    errors.add(error);
+                }
+                break;
+            case "NUEVA_PAGINA":
+                    String valor=parametros.get("ID");
+                    String reg="\n+";
+                    if(parametros.containsKey("ID")&&parametros.containsKey("SITIO") &&parametros.containsKey("PADRE")&& !valor.matches(reg)&&!parametros.get("SITIO").isEmpty()&&!parametros.get("PADRE").isEmpty()){
+                        actionsss.newPage(accion,parametros,tags);
+                    }else{
+                        error="El ID, SITIO y PADRE deben ser obligatorio";
+                        System.out.println(error);
+                        errors.add(error);
+                    }
+                System.out.println("Aqui se ejecuta la Creacion del nueva pagina  web-------------"+parametros.get("ID")+"---------------------------------------------------------3");
+                break;
+            case "BORRAR_PAGINA":
+                System.out.println("Estamos en borrar");
+                String c=parametros.get("ID");
+                String d="\n+";
+                if(attr.isEmpty() &&tags.isEmpty()){
+                    if(parametros.containsKey("ID")&&!c.matches(d)){
+                        if(parametros.size()==1){
+                            System.out.println("Borrando pagina web");
+                            actionsss.deletePage(accion,parametros);
+                        }else{
+                            error="Solo se necesita el ID, no mas parametros";
+                            System.out.println(error);
+                            errors.add(error);
+                        }
+                    }else{
+                        error="El ID debe ser obligatorio por tratarse de Borrar sitio";
+                        System.out.println(error);
+                        errors.add(error);
+                    }
+                }else{
+                    error="Al Borrar sitios no debes mandar atributos ni etiquetas ";
+                    System.out.println(error);
+                    errors.add(error);
+                }
+                break;
+            case "MODIFICAR_PAGINA":
+                System.out.println("Aqui se ejecuta la Modificacion de  pagina  web----------------------------------------------------------------------5");
+                break;
+            case "AGREGAR_COMPONENTE":
+                String val=parametros.get("ID");
+                String re="\n+";
+                if(parametros.containsKey("ID")&&parametros.containsKey("PAGINA") &&parametros.containsKey("CLASE")&& !val.matches(re)&&!parametros.get("PAGINA").isEmpty()&&!parametros.get("CLASE").isEmpty()){
+                    actionsss.newComponent(accion,parametros,attr);
+                }else{
+                    error="El ID, PAGINA y CLASE deben ser obligatorio";
+                    System.out.println(error);
+                    errors.add(error);
+                }
+                break;
+            case "BORRAR_COMPONENTE":
+                System.out.println("Borramos Componente  web----------------------------------------------------------------------7");
+                break;
+            case "MODIFICAR_COMPONENTE":
+                System.out.println("Modificamos componente web---------------------------------------------------------------8");
+                break;
+        }
+
     }
     
 }

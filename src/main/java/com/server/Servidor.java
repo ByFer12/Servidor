@@ -4,6 +4,7 @@
 
 package com.server;
 
+import com.server.errores.createXml;
 import com.server.sockets.ServidorSer;
 import com.server.xmlflexcup.XmlAnalyzer;
 import com.server.xmlflexcup.parser;
@@ -22,7 +23,8 @@ public class Servidor {
 
     public static void main(String[] args) throws Exception {
         try {
-            ServerSocket  server=new ServerSocket(11000);
+            createXml.createXml();
+            ServerSocket  server=new ServerSocket(10000);
             while(true){
                 Socket cliente=server.accept();
                 Thread hilo=new Thread(new ServidorSer(cliente));

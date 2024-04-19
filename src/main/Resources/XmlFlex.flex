@@ -3,11 +3,11 @@
 package com.server.xmlflexcup;
 
 import java_cup.runtime.*;
-import java.util.LinkedList;
-import com.server.errores.Errores;
+import java.util.ArrayList;
 %% //separador de area
 %{
-    public static LinkedList<Errores> erroresLexicos=new LinkedList<>();
+    public static ArrayList<String> erroresLexicos=new ArrayList();
+
   public static String mensajeErrorLexico;
 %}
 /* opciones y declaraciones de jflex */
@@ -71,9 +71,10 @@ WhiteSpace = {LineTerminator} | [ \t\f]
 
 
     [^] {System.out.println("Error lexico: en linea: "+yyline+ " Columna: "+yycolumn+" "+yytext());
-        Errores e=new Errores(yytext(),"Error Lexico", "Token es reconocido",yyline,yycolumn);
-        erroresLexicos.add(e);
+
+
         mensajeErrorLexico="Error Lexico, token no reconocido: "+yytext()+" en fila: "+yyline+" y columna: "+yycolumn;
+        erroresLexicos.add(mensajeErrorLexico);
 
       }
       }

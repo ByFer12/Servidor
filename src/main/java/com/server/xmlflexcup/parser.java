@@ -6,11 +6,10 @@
 package com.server.xmlflexcup;
 
 import java_cup.runtime.*;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.server.errores.Errores;
 
 /** CUP v0.11b 20160615 generated parser.
   */
@@ -50,49 +49,49 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\131\000\004\022\007\001\002\000\006\002\ufffd\022" +
-    "\ufffd\001\002\000\006\002\uffff\022\014\001\002\000\004" +
+    "\000\131\000\004\017\007\001\002\000\006\002\ufffd\017" +
+    "\ufffd\001\002\000\006\002\uffff\017\014\001\002\000\004" +
     "\002\133\001\002\000\006\004\011\005\010\001\002\000" +
-    "\004\006\022\001\002\000\004\021\012\001\002\000\004" +
-    "\022\014\001\002\000\004\022\016\001\002\000\004\005" +
-    "\010\001\002\000\006\002\ufffe\022\ufffe\001\002\000\006" +
-    "\005\010\023\017\001\002\000\004\004\020\001\002\000" +
-    "\004\021\021\001\002\000\004\002\000\001\002\000\004" +
-    "\020\023\001\002\000\004\017\024\001\002\000\004\021" +
-    "\025\001\002\000\004\022\031\001\002\000\004\022\ufff8" +
-    "\001\002\000\004\022\ufffa\001\002\000\004\022\ufff9\001" +
-    "\002\000\010\007\036\011\037\013\040\001\002\000\004" +
-    "\022\035\001\002\000\004\022\ufff7\001\002\000\004\022" +
-    "\ufffb\001\002\000\012\007\036\011\037\013\040\023\041" +
-    "\001\002\000\004\021\107\001\002\000\004\021\070\001" +
-    "\002\000\004\021\044\001\002\000\004\005\042\001\002" +
-    "\000\004\021\043\001\002\000\006\002\ufffc\022\ufffc\001" +
-    "\002\000\004\022\045\001\002\000\004\014\053\001\002" +
-    "\000\004\022\uffee\001\002\000\004\022\051\001\002\000" +
-    "\004\022\uffef\001\002\000\006\014\053\023\052\001\002" +
-    "\000\004\013\066\001\002\000\004\006\054\001\002\000" +
-    "\004\020\055\001\002\000\004\017\056\001\002\000\004" +
-    "\021\057\001\002\000\004\015\060\001\002\000\004\022" +
-    "\uffec\001\002\000\004\022\062\001\002\000\004\023\063" +
-    "\001\002\000\004\014\064\001\002\000\004\021\065\001" +
-    "\002\000\004\022\uffed\001\002\000\004\021\067\001\002" +
-    "\000\004\022\ufff5\001\002\000\004\022\071\001\002\000" +
-    "\004\012\077\001\002\000\004\022\074\001\002\000\004" +
-    "\022\uffea\001\002\000\006\012\077\023\076\001\002\000" +
-    "\004\022\uffeb\001\002\000\004\011\105\001\002\000\004" +
-    "\016\100\001\002\000\004\020\101\001\002\000\004\017" +
-    "\102\001\002\000\004\023\103\001\002\000\004\021\104" +
-    "\001\002\000\004\022\uffe9\001\002\000\004\021\106\001" +
-    "\002\000\004\022\ufff4\001\002\000\004\022\110\001\002" +
-    "\000\004\010\115\001\002\000\004\022\113\001\002\000" +
-    "\004\022\ufff2\001\002\000\006\010\115\023\116\001\002" +
-    "\000\004\022\ufff3\001\002\000\004\006\121\001\002\000" +
-    "\004\007\117\001\002\000\004\021\120\001\002\000\004" +
-    "\022\ufff6\001\002\000\004\020\122\001\002\000\004\017" +
-    "\123\001\002\000\004\021\124\001\002\000\004\015\125" +
-    "\001\002\000\004\022\ufff0\001\002\000\004\022\127\001" +
-    "\002\000\004\023\130\001\002\000\004\010\131\001\002" +
-    "\000\004\021\132\001\002\000\004\022\ufff1\001\002\000" +
+    "\004\021\022\001\002\000\004\016\012\001\002\000\004" +
+    "\017\014\001\002\000\004\017\016\001\002\000\004\005" +
+    "\010\001\002\000\006\002\ufffe\017\ufffe\001\002\000\006" +
+    "\005\010\020\017\001\002\000\004\004\020\001\002\000" +
+    "\004\016\021\001\002\000\004\002\000\001\002\000\004" +
+    "\015\023\001\002\000\004\014\024\001\002\000\004\016" +
+    "\025\001\002\000\004\017\031\001\002\000\004\017\ufff8" +
+    "\001\002\000\004\017\ufffa\001\002\000\004\017\ufff9\001" +
+    "\002\000\010\006\036\010\037\012\040\001\002\000\004" +
+    "\017\035\001\002\000\004\017\ufff7\001\002\000\004\017" +
+    "\ufffb\001\002\000\012\006\036\010\037\012\040\020\041" +
+    "\001\002\000\004\016\107\001\002\000\004\016\070\001" +
+    "\002\000\004\016\044\001\002\000\004\005\042\001\002" +
+    "\000\004\016\043\001\002\000\006\002\ufffc\017\ufffc\001" +
+    "\002\000\004\017\045\001\002\000\004\013\053\001\002" +
+    "\000\004\017\uffee\001\002\000\004\017\051\001\002\000" +
+    "\004\017\uffef\001\002\000\006\013\053\020\052\001\002" +
+    "\000\004\012\066\001\002\000\004\021\054\001\002\000" +
+    "\004\015\055\001\002\000\004\014\056\001\002\000\004" +
+    "\016\057\001\002\000\004\022\060\001\002\000\004\017" +
+    "\uffec\001\002\000\004\017\062\001\002\000\004\020\063" +
+    "\001\002\000\004\013\064\001\002\000\004\016\065\001" +
+    "\002\000\004\017\uffed\001\002\000\004\016\067\001\002" +
+    "\000\004\017\ufff5\001\002\000\004\017\071\001\002\000" +
+    "\004\011\077\001\002\000\004\017\074\001\002\000\004" +
+    "\017\uffea\001\002\000\006\011\077\020\076\001\002\000" +
+    "\004\017\uffeb\001\002\000\004\010\105\001\002\000\004" +
+    "\023\100\001\002\000\004\015\101\001\002\000\004\014" +
+    "\102\001\002\000\004\020\103\001\002\000\004\016\104" +
+    "\001\002\000\004\017\uffe9\001\002\000\004\016\106\001" +
+    "\002\000\004\017\ufff4\001\002\000\004\017\110\001\002" +
+    "\000\004\007\115\001\002\000\004\017\113\001\002\000" +
+    "\004\017\ufff2\001\002\000\006\007\115\020\116\001\002" +
+    "\000\004\017\ufff3\001\002\000\004\021\121\001\002\000" +
+    "\004\006\117\001\002\000\004\016\120\001\002\000\004" +
+    "\017\ufff6\001\002\000\004\015\122\001\002\000\004\014" +
+    "\123\001\002\000\004\016\124\001\002\000\004\022\125" +
+    "\001\002\000\004\017\ufff0\001\002\000\004\017\127\001" +
+    "\002\000\004\020\130\001\002\000\004\007\131\001\002" +
+    "\000\004\016\132\001\002\000\004\017\ufff1\001\002\000" +
     "\004\002\001\001\002" });
 
   /** Access to parse-action table. */
@@ -175,7 +174,9 @@ public class parser extends java_cup.runtime.lr_parser {
         List<String> clases=List.of("TITULO","PARRAFO","IMAGEN","VIDEO","MENU");
         List<String> action=List.of("NUEVO_SITIO_WEB","BORRAR_SITIO_WEB","NUEVA_PAGINA","BORRAR_PAGINA","MODIFICAR_PAGINA","AGREGAR_COMPONENTE","BORRAR_COMPONENTE","MODIFICAR_COMPONENTE");
         List<String> atributos=List.of("TEXTO","ALINEACION","COLOR","ORIGEN","ALTURA","ANCHO","PADRE","ETIQUETAS");
-       public static LinkedList<Errores> erroresSintacticos=new LinkedList();
+
+        public static ArrayList<String> erroresSintacticos=new ArrayList();
+        String errorss;
        public static boolean isError=false;
     //public static List<String> col= new ArrayList<>();
    // public static List<String> path= new ArrayList<>();
@@ -191,7 +192,7 @@ public class parser extends java_cup.runtime.lr_parser {
            String lexema=s.value.toString();
            int columna=s.right;
            int fila=s.left;
-           System.out.println("Error en lexema: "+lexema+" en columna: "+columna+" y fila: "+fila);
+           System.out.println("Error sintactico en lexema: "+lexema+" en columna: "+columna+" y fila: "+fila);
 
         }
 
@@ -199,44 +200,54 @@ public class parser extends java_cup.runtime.lr_parser {
            String lexema=s.value.toString();
            int columna=s.right;
            int fila=s.left;
-           Errores er=new Errores(lexema,"Error sintactico","No se esperaba ese tokenn",fila,columna);
+           errorss= " Error sintactico en \""+lexema+"\" se esperaba ese tokenn en fila"+fila+" Columna"+columna;
 
-           erroresSintacticos.add(er);
+           erroresSintacticos.add(errorss);
     }
 
   public void textParam(String text, String name, int left, int right) {
     if (!text.startsWith("[") && !text.endsWith("]")) {
       isError = true;
       System.out.println("Error en lexema: " + text + " en columna: " + left + " y fila: " + right);
-      Errores er = new Errores(text, "Error sintactico", "No se esperaba ese tokenn", left, right);
-      erroresSintacticos.add(er);
+      errorss= " Error sintactico en \""+text+"\" Falta corchetes en fila "+left+" Columna "+right;
+      erroresSintacticos.add(errorss);
     } else {
       if (!name.equals(name.toUpperCase())) {
-      System.out.println("Error en lexema: " + name + " en columna: " + left + " y fila: " + right+" Debe ser mayuscula");
-      Errores er = new Errores(name, "Error sintactico", "No se esperaba ese tokenn", left, right);
-      erroresSintacticos.add(er);
+     errorss= " Error sintactico en \""+name+"\" se esperaba tokenn MAYUSCULA en fila "+left+" Columna "+right;
+      System.out.println(errorss);
+      erroresSintacticos.add(errorss);
        isError = true;
       } else {
         int ind = name.lastIndexOf('\"');
         name = name.substring(1, ind);
         if(!parametros.contains(name)){
         isError=true;
-        System.out.println("Error en lexema: " + name + " en columna: " + left + " y fila: " + right+" El parametro no existe");
-              Errores er = new Errores(name, "Error ", "parametro no existe", left, right);
-              erroresSintacticos.add(er);
-        }
-
-        if (name.equals("\"ID\"")) {
-          int index = text.indexOf("]");
-          text = text.substring(1, index);
-          String patron = "^[$\\-_][a-zA-Z0-9$\\-_]+";
-          Pattern pattern = Pattern.compile(patron);
-          Matcher matcher = pattern.matcher(text);
-          if(!matcher.matches()){
-            System.out.println("Error en lexema: " + text + " en columna: " + left + " y fila: " + right);
-            Errores er = new Errores(name, "Error sintactico", "No se esperaba ese tokenn", left, right);
-            erroresSintacticos.add(er);
-            isError=true;
+             errorss= " Error sintactico en \""+name+"\" parametro no existe en fila "+left+" Columna "+right;
+        System.out.println(errorss);
+              erroresSintacticos.add(errorss);
+        }else  {
+          if (name.equals("ID")) {
+            int index = text.indexOf("]");
+            text = text.substring(1, index);
+            String patron = "^[$\\-_][a-zA-Z0-9$\\-_]+";
+            Pattern pattern = Pattern.compile(patron);
+            Matcher matcher = pattern.matcher(text);
+            if (!matcher.matches()) {
+              errorss= " Error sintactico en \""+name+"\" El identificador debe iniciar con _, $, - en fila "+left+" Columna "+right;
+              System.out.println(errorss);
+              erroresSintacticos.add(errorss);
+              isError = true;
+            }
+          }
+          if (name.equals("CLASE")) {
+            int index = text.indexOf("]");
+            text = text.substring(1, index);
+            if (!clases.contains(text)) {
+               errorss= " Error sintactico en \""+text+"\" esa clase no existe en fila "+left+" Columna "+right;
+              System.out.println(errorss);
+              erroresSintacticos.add(errorss);
+              isError = true;
+            }
           }
 
         }
@@ -249,34 +260,33 @@ public class parser extends java_cup.runtime.lr_parser {
    public void textAttr(String text, String name, int left, int right) {
       if (!text.startsWith("[") && !text.endsWith("]")) {
         isError = true;
-        System.out.println("Error en lexema: " + text + " en columna: " + left + " y fila: " + right);
-        Errores er = new Errores(text, "Error sintactico", "No se esperaba ese tokenn", left, right);
-        erroresSintacticos.add(er);
+         errorss= " Error sintactico en \""+text+"\" falta corchetes en fila "+left+" Columna "+right;
+        System.out.println(errorss);
+        erroresSintacticos.add(errorss);
       } else {
         if (!name.equals(name.toUpperCase())) {
-          System.out.println("Error en lexema: " + name + " en columna: " + left + " y fila: " + right+" Debe ser mayuscula");
-        Errores er = new Errores(name, "Error sintactico", "No se esperaba ese tokenn", left, right);
-        erroresSintacticos.add(er);
+         errorss= " Error sintactico en \""+name+"\" Debe ser mayuscula en fila "+left+" columna "+right;
+          System.out.println(errorss);
+        erroresSintacticos.add(errorss);
          isError = true;
         } else {
           int ind = name.lastIndexOf('\"');
           name = name.substring(1, ind);
                 if(!atributos.contains(name)){
                 isError=true;
-                System.out.println("Error en lexema: " + name + " en columna: " + left + " y fila: " + right+" El atributo no existe");
-                      Errores er = new Errores(name, "Error ", "atributo no existe", left, right);
-                      erroresSintacticos.add(er);
+                errorss= " Error sintactico en \""+name+"\" El atributo no existe en fila "+left+" columna "+right;
+                System.out.println(errorss);
+                      erroresSintacticos.add(errorss);
                 }
-          if (name.equals("\"COLOR\"")) {
+          if (name.equals("COLOR")) {
             int index = text.indexOf("]");
             text = text.substring(1, index);
             String color = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
             Pattern pattern = Pattern.compile(color);
             Matcher matcher = pattern.matcher(text);
             if(!matcher.matches()){
-              System.out.println("Error en lexema: " + text + " en columna: " + left + " y fila: " + right+" debe tener formato hexadecimal");
-              Errores er = new Errores(name, "Error sintactico", "No se esperaba ese tokenn", left, right);
-              erroresSintacticos.add(er);
+              errorss= " Error sintactico en \""+name+"\" debe tener formato hexadecimal en fila "+left+" columna "+right;
+              erroresSintacticos.add(errorss);
               isError=true;
             }
 
@@ -285,21 +295,20 @@ public class parser extends java_cup.runtime.lr_parser {
 
       }
     }
-
     public void actionManage(String act, int left, int right) {
       if (!act.equals(act.toUpperCase())) {
-        System.out.println("Error en lexema: " + act + " en columna: " + left + " y fila: " + right + " Debe ser mayuscula");
-        Errores er = new Errores(act, "Error sintactico", " debe ser mayuscula ", left, right);
-        erroresSintacticos.add(er);
+       errorss= " Error sintactico en \""+act+"\" Debe ser mayuscula en fila "+left+" columna "+right;
+        System.out.println(errorss);
+        erroresSintacticos.add(errorss);
         isError = true;
       } else {
         int ind = act.lastIndexOf('\"');
         act = act.substring(1, ind);
         if (!action.contains(act)) {
           isError = true;
-          System.out.println("Error en lexema: " + act + " en columna: " + left + " y fila: " + right + " esta accion no existe");
-          Errores er = new Errores(act, "Error ", "esta accion no existe", left, right);
-          erroresSintacticos.add(er);
+            errorss= " Error sintactico en \""+act+"\" esta accion no existe en fila "+left+" columna "+right;
+          System.out.println(errorss);
+          erroresSintacticos.add(errorss);
         }
 
 
@@ -391,7 +400,7 @@ class CUP$parser$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
 		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
-		 	 actionManage(s.toString(),sleft,sright);
+		 	 actionManage(s.toString(),sleft+1,sright);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("accionn",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -497,7 +506,7 @@ class CUP$parser$actions {
 		int tright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
 		String t = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		
-                                                                                          textParam(t,s.toString(), sleft, sright);
+                                                                                          textParam(t,s.toString(), sleft+1, sright);
                                                                                     
               CUP$parser$result = parser.getSymbolFactory().newSymbol("param",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -547,7 +556,7 @@ class CUP$parser$actions {
 		int tright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
 		Object t = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
 		
-                                                                                textAttr(t.toString(),s.toString(),sleft,sright);
+                                                                                textAttr(t.toString(),s.toString(),sleft+1,sright);
                                                                               
               CUP$parser$result = parser.getSymbolFactory().newSymbol("atr",13, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
