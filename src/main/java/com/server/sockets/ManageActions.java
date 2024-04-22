@@ -15,12 +15,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Map;
 
 
@@ -70,7 +68,10 @@ public class ManageActions {
                 agregarParametro(doc, datosUsuario, "USUARIO_MODIFICACION", ServidorSer.usuario);
             }
             Element paginas = doc.createElement("paginas");
-            paginas.appendChild(doc.createTextNode("HOla"));
+            //Element indexPage=doc.createElement("pagina");
+            //indexPage.setAttribute("ID","index");
+            //paginas.appendChild(indexPage);
+            //paginas.appendChild(doc.createTextNode("HOla"));
             sitio.appendChild(paginas);
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();

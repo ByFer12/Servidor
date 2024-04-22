@@ -4,6 +4,7 @@
 
 package com.server;
 
+import com.server.XmlToHtml.ConvertXmlHtml;
 import com.server.errores.createXml;
 import com.server.sockets.ServidorSer;
 import com.server.xmlflexcup.XmlAnalyzer;
@@ -22,6 +23,7 @@ import java.net.Socket;
 public class Servidor {
 
     public static void main(String[] args) throws Exception {
+        ConvertXmlHtml.convertXmlToHtml();
         try {
             createXml.createXml();
             ServerSocket  server=new ServerSocket(10000);

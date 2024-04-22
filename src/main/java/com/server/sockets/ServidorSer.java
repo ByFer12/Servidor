@@ -28,6 +28,7 @@ public class ServidorSer implements Runnable{
     public static String messege;
     public static ArrayList<String>errors=new ArrayList<>();
     public static ArrayList<String>mensajes=new ArrayList<>();
+    private static  ArrayList<String>idesComponents=new ArrayList<>();
     private String error;
 
     public ServidorSer(Socket con){
@@ -267,10 +268,19 @@ public class ServidorSer implements Runnable{
                 System.out.println("Aqui se ejecuta la Modificacion de  pagina  web----------------------------------------------------------------------5");
                 break;
             case "AGREGAR_COMPONENTE":
-                String val=parametros.get("ID");
+                String val=parametros.get("ID").trim();
                 String re="\n+";
                 if(parametros.containsKey("ID")&&parametros.containsKey("PAGINA") &&parametros.containsKey("CLASE")&& !val.matches(re)&&!parametros.get("PAGINA").isEmpty()&&!parametros.get("CLASE").isEmpty()){
-                    actionsss.newComponent(accion,parametros,attr);
+                    if (!idesComponents.contains(val)){
+                        System.out.println("\nAgregamos componente");
+                        idesComponents.add(val);
+                        actionsss.newComponent(accion,parametros,attr);
+
+                    }else{
+                        error="El ID ya existe, intente con otro nuevo";
+                        System.out.println(error);
+                        errors.add(error);
+                    }
                 }else{
                     error="El ID, PAGINA y CLASE deben ser obligatorio";
                     System.out.println(error);

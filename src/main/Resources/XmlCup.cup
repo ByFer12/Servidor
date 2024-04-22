@@ -10,7 +10,7 @@ parser code {:
         List<String> parametros=List.of("ID","USUARIO_CREACION","FECHA_CREACION","FECHA_MODIFICACION","USUARIO_MODIFICACION","TITULO","SITIO","PADRE","PAGINA","CLASE");
         List<String> clases=List.of("TITULO","PARRAFO","IMAGEN","VIDEO","MENU");
         List<String> action=List.of("NUEVO_SITIO_WEB","BORRAR_SITIO_WEB","NUEVA_PAGINA","BORRAR_PAGINA","MODIFICAR_PAGINA","AGREGAR_COMPONENTE","BORRAR_COMPONENTE","MODIFICAR_COMPONENTE");
-        List<String> atributos=List.of("TEXTO","ALINEACION","COLOR","ORIGEN","ALTURA","ANCHO","PADRE","ETIQUETAS");
+         List<String> atributos=List.of("TEXTO","ALINEACION","COLOR","ORIGEN","ALTURA","ANCHO","PADRE","ETIQUETAS","CENTRAR","IZQUIERDA","DERECHA","JUSTIFICAR");
 
         public static ArrayList<String> erroresSintacticos=new ArrayList();
         String errorss;
