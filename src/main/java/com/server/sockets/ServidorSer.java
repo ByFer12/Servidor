@@ -1,6 +1,7 @@
 
 package com.server.sockets;
 
+import com.server.consult.VisitSite;
 import com.server.xmlflexcup.XmlAnalyzer;
 import com.server.xmlflexcup.parser;
 import org.w3c.dom.Document;
@@ -45,31 +46,37 @@ public class ServidorSer implements Runnable{
             usuario=(String) entrada.readObject();
             messege=messege.trim();
             System.out.println("Usuario: "+usuario);
-
-
-            if(messege.endsWith(">")){
-               // System.out.println(newMessege);
-                XmlAnalyzer flex=new XmlAnalyzer(new BufferedReader(new StringReader(messege)));
-                parser p=new parser(flex);
-                p.parse();
-
-                if(parser.erroresSintacticos.isEmpty() &&XmlAnalyzer.erroresLexicos.isEmpty()){
-                    validar(messege);
-                }
-            }else{
-                error="Error en la sintaxis, falta cierre de > en el ultimo tag";
-                System.out.println(error);
-                errors.add(error);
+            boolean isSQL=false;
+            if(!messege.startsWith("<")){
+                VisitSite.procesVisitSite(messege);
+                System.out.println("Si");
+                isSQL=true;
             }
-            salida.writeObject(errors);
-            salida.writeObject(parser.erroresSintacticos);
-            salida.writeObject(XmlAnalyzer.erroresLexicos);
-            salida.writeObject(mensajes);
-            errors.clear();
-            parser.erroresSintacticos.clear();
-            XmlAnalyzer.erroresLexicos.clear();
-            mensajes.clear();
-            con.close();
+            if(!isSQL) {
+                if (messege.endsWith(">")) {
+                    // System.out.println(newMessege);
+                    XmlAnalyzer flex = new XmlAnalyzer(new BufferedReader(new StringReader(messege)));
+                    parser p = new parser(flex);
+                    p.parse();
+
+                    if (parser.erroresSintacticos.isEmpty() && XmlAnalyzer.erroresLexicos.isEmpty()) {
+                        validar(messege);
+                    }
+                } else {
+                    error = "Error en la sintaxis, falta cierre de > en el ultimo tag";
+                    System.out.println(error);
+                    errors.add(error);
+                }
+                salida.writeObject(errors);
+                salida.writeObject(parser.erroresSintacticos);
+                salida.writeObject(XmlAnalyzer.erroresLexicos);
+                salida.writeObject(mensajes);
+                errors.clear();
+                parser.erroresSintacticos.clear();
+                XmlAnalyzer.erroresLexicos.clear();
+                mensajes.clear();
+                con.close();
+            }
         } catch (IOException |ClassNotFoundException  ex) {
             ex.printStackTrace();
             System.out.println("No se encontro clientes...");
@@ -271,16 +278,11 @@ public class ServidorSer implements Runnable{
                 String val=parametros.get("ID").trim();
                 String re="\n+";
                 if(parametros.containsKey("ID")&&parametros.containsKey("PAGINA") &&parametros.containsKey("CLASE")&& !val.matches(re)&&!parametros.get("PAGINA").isEmpty()&&!parametros.get("CLASE").isEmpty()){
-                    if (!idesComponents.contains(val)){
+
                         System.out.println("\nAgregamos componente");
                         idesComponents.add(val);
                         actionsss.newComponent(accion,parametros,attr);
 
-                    }else{
-                        error="El ID ya existe, intente con otro nuevo";
-                        System.out.println(error);
-                        errors.add(error);
-                    }
                 }else{
                     error="El ID, PAGINA y CLASE deben ser obligatorio";
                     System.out.println(error);
@@ -288,10 +290,44 @@ public class ServidorSer implements Runnable{
                 }
                 break;
             case "BORRAR_COMPONENTE":
-                System.out.println("Borramos Componente  web----------------------------------------------------------------------7");
+                System.out.println("Estamos en borrar");
+                String e=parametros.get("ID");
+                String f="\n+";
+                if(attr.isEmpty() &&tags.isEmpty()){
+                    if(parametros.containsKey("ID")&&!e.matches(f) && parametros.containsKey("PAGINA")){
+                        if(parametros.size()==2){
+                            System.out.println("Borrando componente web");
+                            actionsss.deleteComponente(accion,parametros);
+                        }else{
+                            error="Solo se necesita el ID y PAGINA, no mas parametros";
+                            System.out.println(error);
+                            errors.add(error);
+                        }
+                    }else{
+                        error="El ID y PAGINA deben ser obligatorios por tratarse de Borrar Componente";
+                        System.out.println(error);
+                        errors.add(error);
+                    }
+                }else{
+                    error="Al Borrar sitios no debes mandar atributos ni etiquetas ";
+                    System.out.println(error);
+                    errors.add(error);
+                }
                 break;
             case "MODIFICAR_COMPONENTE":
-                System.out.println("Modificamos componente web---------------------------------------------------------------8");
+                String g=parametros.get("ID").trim();
+                String h="\n+";
+                if(parametros.containsKey("ID")&&parametros.containsKey("PAGINA") &&parametros.containsKey("CLASE")&& !g.matches(h)&&!parametros.get("PAGINA").isEmpty()&&!parametros.get("CLASE").isEmpty()){
+
+                        System.out.println("\nAgregamos componente");
+                        idesComponents.add(g);
+                        actionsss.modifyComponent(accion,parametros,attr);
+
+                }else{
+                    error="El ID, PAGINA y CLASE deben ser obligatorio";
+                    System.out.println(error);
+                    errors.add(error);
+                }
                 break;
         }
 

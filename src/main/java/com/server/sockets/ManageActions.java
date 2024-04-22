@@ -19,12 +19,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Map;
 
 
 public class ManageActions {
     LocalDate fechaActual = LocalDate.now();
-
+    ArrayList<String>ides=new ArrayList<>();
     public void newSitio(String acction, Map<String, String> param) {
         ServidorSer.messege = "Tipo de accion realizada \"" + acction + "\"";
         ServidorSer.mensajes.add(ServidorSer.messege);
@@ -369,12 +370,15 @@ public class ManageActions {
                     if (siteNode.getNodeType() == Node.ELEMENT_NODE) {
                         Element sitioooo = (Element) siteNode;
                         String idSitio = sitioooo.getAttribute("ID");
-                        if (idSitio.equals(param.get("PAGINA"))) {
+                        if (idSitio.equals(param.get("PAGINA") )) {
+                            if(!ides.contains(param.get("ID"))){
+
                             sit = true;
                             Element pagina = doc.createElement("componentes");
                             pagina.setAttribute("ID", param.get("ID"));
                             Element parametro = doc.createElement("parametros");
                             pagina.appendChild(parametro);
+                            ides.add(param.get("ID"));
                             //agregarParametro(doc,parametro,"ID",param.get("ID"));
                             agregarParametro(doc, parametro, "PAGINA", param.get("PAGINA"));
                             agregarParametro(doc, parametro, "CLASE", param.get("CLASE"));
@@ -394,6 +398,10 @@ public class ManageActions {
                             ServidorSer.messege = "Pagina editado exitosamente";
                             ServidorSer.mensajes.add(ServidorSer.messege);
                             break;
+                        }else{
+                                String err = "El ID del componente ya existe";
+                                ServidorSer.errors.add(err);
+                            }
                         }
                     }
                 }
@@ -429,7 +437,7 @@ public class ManageActions {
                     Element pag=(Element)padre;
                     String idPag=pag.getAttribute("ID");
                     String atributoID = paginaElemento.getAttribute("ID");
-                    System.out.println("ESTA ES LA PAGINA A ELIMINAR CON ID = " + atributoID);
+                    System.out.println("ESTA ES LA PAGINA A ELIMINAR COMPONENTE CON ID = " + atributoID);
                     if (atributoID.equals(param.get("ID"))&&idPag.equals(param.get("PAGINA"))) {
                         paginaNodo.getParentNode().removeChild(paginaNodo);
                         bol = true;
@@ -452,6 +460,92 @@ public class ManageActions {
         } catch (Exception e) {
 
         }
+    }
+
+    public void modifyComponent(String action, Map<String,String>params, Map<String, String> attr){
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(new File("PaginasWeb/paginas.xml"));
+            String idPag=params.get("PAGINA");
+            Node paginaNode = buscarPaginaPorID(doc, idPag);
+            if (paginaNode != null) {
+                // Obtener los nodos de componentes de la página
+                NodeList componentesList = paginaNode.getChildNodes();
+
+                // Buscar el componente con el ID deseado y realizar la modificación
+                for (int i = 0; i < componentesList.getLength(); i++) {
+                    Node componenteNode = componentesList.item(i);
+                    if (componenteNode.getNodeType() == Node.ELEMENT_NODE) {
+                        Element componenteElement = (Element) componenteNode;
+                        String componenteID = componenteElement.getAttribute("ID");
+
+                        if (componenteID.equals(params.get("ID"))) {
+                            Element parametros=(Element)componenteElement.getElementsByTagName("parametros").item(0);
+                            Element param=(Element) parametros.getElementsByTagName("CLASE").item(0);
+                            param.setTextContent(params.get("CLASE"));
+
+                            // Realizar la modificación del componente
+                            // Por ejemplo, cambiar el texto del componente
+                            Element atributos = (Element) componenteElement.getElementsByTagName("atributos").item(0);
+                            Element textoElement = (Element) atributos.getElementsByTagName("TEXTO").item(0);
+                            textoElement.setTextContent(attr.get("TEXTO"));
+                            if(attr.containsKey("ALINEACION") && !attr.get("ALINEACION").isEmpty()){
+                                Element alineacion = (Element) atributos.getElementsByTagName("ALINEACION").item(0);
+                                alineacion.setTextContent(attr.get("ALINEACION"));
+                            }
+                            if(attr.containsKey("COLOR") && !attr.get("COLOR").isEmpty()){
+                                Element color = (Element) atributos.getElementsByTagName("COLOR").item(0);
+                                color.setTextContent(attr.get("COLOR"));
+                            }
+                            if(attr.containsKey("ORIGEN") && !attr.get("ORIGEN").isEmpty()){
+                                Element origen = (Element) atributos.getElementsByTagName("ORIGEN").item(0);
+                                origen.setTextContent(attr.get("ORIGEN"));
+                            }
+                            if(attr.containsKey("ALTURA") && !attr.get("ALTURA").isEmpty()){
+                                Element altura = (Element) atributos.getElementsByTagName("ALTURA").item(0);
+                                altura.setTextContent(attr.get("ALTURA"));
+                            }
+                            if(attr.containsKey("ANCHO") && !attr.get("ANCHO").isEmpty()){
+                                Element ancho = (Element) atributos.getElementsByTagName("ANCHO").item(0);
+                                ancho.setTextContent(attr.get("ANCHO"));
+                            }
+                        }
+                    }
+                }
+
+                // Guardar los cambios de vuelta al archivo XML
+                guardarCambios(doc,"PaginasWeb/paginas.xml");
+                System.out.println("Componente modificado exitosamente.");
+            } else {
+                System.out.println("No se encontró la página con ID: " + idPag);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    private static void guardarCambios(Document doc, String filePath) throws TransformerException {
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(new File(filePath));
+        transformer.transform(source, result);
+    }
+    // Método para buscar una página por su ID
+    private static Node buscarPaginaPorID(Document doc, String idPagina) {
+        NodeList paginas = doc.getElementsByTagName("pagina");
+        for (int i = 0; i < paginas.getLength(); i++) {
+            Node paginaNode = paginas.item(i);
+            if (paginaNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element paginaElement = (Element) paginaNode;
+                String paginaID = paginaElement.getAttribute("ID");
+                if (paginaID.equals(idPagina)) {
+                    return paginaNode;
+                }
+            }
+        }
+        return null;
     }
 
     private static void agregarParametro(Document doc, Element datosUsuario, String nombre, String valor) {

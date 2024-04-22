@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <sitiosWeb>
+
     <SITIO ID="_Pag1">
         <datosUsuario>
             <USUARIO_CREACION>Fernando</USUARIO_CREACION>
-            <FECHA_CREACION>2024-04-21</FECHA_CREACION>
-            <FECHA_MODIFICACION>2024-04-21</FECHA_MODIFICACION>
+            <FECHA_CREACION>2024-04-22</FECHA_CREACION>
+            <FECHA_MODIFICACION>2024-04-22</FECHA_MODIFICACION>
             <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
         </datosUsuario>
         <paginas>
@@ -14,12 +15,12 @@
                     <PADRE>Index</PADRE>
                     <TITULO>Primera Web</TITULO>
                     <USUARIO_CREACION>Byron Torres</USUARIO_CREACION>
-                    <FECHA_CREACION>2024-04-21</FECHA_CREACION>
-                    <FECHA_MODIFICACION>2024-04-21</FECHA_MODIFICACION>
+                    <FECHA_CREACION>2024-04-22</FECHA_CREACION>
+                    <FECHA_MODIFICACION>2024-04-22</FECHA_MODIFICACION>
                     <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
                 </parametros>
                 <etiquetas>
-                    <etiqueta>Cursos</etiqueta>
+                    <etiqueta>etiqueta1</etiqueta>
                     <etiqueta>etiqueta2</etiqueta>
                     <etiqueta>etiqueta3</etiqueta>
                 </etiquetas>
@@ -27,10 +28,10 @@
                     <parametros>
                         <SITIO>_Pag1</SITIO>
                         <PADRE>$Index</PADRE>
-                        <TITULO>Pagina de la LANDIVAR</TITULO>
+                        <TITULO>Pagina del cunoc</TITULO>
                         <USUARIO_CREACION>Fernando Torres</USUARIO_CREACION>
-                        <FECHA_CREACION>2024-04-21</FECHA_CREACION>
-                        <FECHA_MODIFICACION>2024-04-21</FECHA_MODIFICACION>
+                        <FECHA_CREACION>2024-04-22</FECHA_CREACION>
+                        <FECHA_MODIFICACION>2024-04-22</FECHA_MODIFICACION>
                         <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
                     </parametros>
                     <etiquetas>
@@ -38,16 +39,6 @@
                         <etiqueta>Notas</etiqueta>
                         <etiqueta>Mate</etiqueta>
                     </etiquetas>
-                    <componentes ID="_comp-1">
-                        <parametros>
-                            <PAGINA>$URL</PAGINA>
-                            <CLASE>TITULO</CLASE>
-                        </parametros>
-                        <atributos>
-                            <TEXTO>Este es el texto debe estar en URL pagina</TEXTO>
-                            <COLOR>#5A5A5A</COLOR>
-                        </atributos>
-                    </componentes>
                 </pagina>
                 <componentes ID="$comp-1">
                     <parametros>
@@ -55,68 +46,17 @@
                         <CLASE>TITULO</CLASE>
                     </parametros>
                     <atributos>
-                        <TEXTO>Este es el texto debe estar en el Index padre</TEXTO>
+                        <TEXTO>Este es el texto que aparece en el titulo :)</TEXTO>
                         <COLOR>#5A5A5A</COLOR>
                     </atributos>
                 </componentes>
-                <componentes ID="_comp-1">
+                <componentes ID="$_comp-1">
                     <parametros>
                         <PAGINA>$Index</PAGINA>
-                        <CLASE>MENU</CLASE>
-                    </parametros>
-                    <atributos>
-                        <PADRE>$Index</PADRE>
-                    </atributos>
-                </componentes>
-                <pagina ID="$muni_">
-                    <parametros>
-                        <SITIO>_Pag1</SITIO>
-                        <PADRE>$Index</PADRE>
-                        <TITULO>Pagina de la municipalidad</TITULO>
-                        <USUARIO_CREACION>Byron Torres</USUARIO_CREACION>
-                        <FECHA_CREACION>2024-04-21</FECHA_CREACION>
-                        <FECHA_MODIFICACION>2024-04-21</FECHA_MODIFICACION>
-                        <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
-                    </parametros>
-                    <etiquetas>
-                        <etiqueta>Cursos</etiqueta>
-                        <etiqueta>Mi_mini2</etiqueta>
-                        <etiqueta>etiqueta3</etiqueta>
-                    </etiquetas>
-                    <componentes ID="-1MiMuni">
-                        <parametros>
-                            <PAGINA>$muni_</PAGINA>
-                            <CLASE>PARRAFO</CLASE>
-                        </parametros>
-                        <atributos>
-                            <TEXTO>Este es el texto que aparece en la pagina de mi municipalidad</TEXTO>
-                            <COLOR>#359D51</COLOR>
-                        </atributos>
-                    </componentes>
-                </pagina>
-            </pagina>
-            <pagina ID="$UMG2">
-                <parametros>
-                    <SITIO>_Pag1</SITIO>
-                    <PADRE>Index</PADRE>
-                    <TITULO>Pagina de la Mariano</TITULO>
-                    <USUARIO_CREACION>Edisson Torres</USUARIO_CREACION>
-                    <FECHA_CREACION>2024-04-21</FECHA_CREACION>
-                    <FECHA_MODIFICACION>2024-04-21</FECHA_MODIFICACION>
-                    <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
-                </parametros>
-                <etiquetas>
-                    <etiqueta>Cursos</etiqueta>
-                    <etiqueta>Xela</etiqueta>
-                    <etiqueta>Parqueos</etiqueta>
-                </etiquetas>
-                <componentes ID="_comp-">
-                    <parametros>
-                        <PAGINA>$UMG2</PAGINA>
                         <CLASE>TITULO</CLASE>
                     </parametros>
                     <atributos>
-                        <TEXTO>Este es el texto debe estar en UMG2 pagina</TEXTO>
+                        <TEXTO>Este es el texto que aparece en el titulo :)</TEXTO>
                         <COLOR>#5A5A5A</COLOR>
                     </atributos>
                 </componentes>
@@ -126,67 +66,50 @@
     <SITIO ID="$MOMOS">
         <datosUsuario>
             <USUARIO_CREACION>Fernando</USUARIO_CREACION>
-            <FECHA_CREACION>2024-04-21</FECHA_CREACION>
-            <FECHA_MODIFICACION>2024-04-21</FECHA_MODIFICACION>
+            <FECHA_CREACION>2024-04-22</FECHA_CREACION>
+            <FECHA_MODIFICACION>2024-04-22</FECHA_MODIFICACION>
             <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
         </datosUsuario>
         <paginas>
-            <pagina ID="$MESO">
+            <pagina ID="$Index">
                 <parametros>
                     <SITIO>$MOMOS</SITIO>
                     <PADRE>Index</PADRE>
-                    <TITULO>URL PAGE</TITULO>
-                    <USUARIO_CREACION>Byron Torres</USUARIO_CREACION>
-                    <FECHA_CREACION>2024-04-21</FECHA_CREACION>
-                    <FECHA_MODIFICACION>2024-04-21</FECHA_MODIFICACION>
+                    <TITULO>Pagina para la municipalidad de momos</TITULO>
+                    <USUARIO_CREACION>Fernando Torres</USUARIO_CREACION>
+                    <FECHA_CREACION>2024-04-22</FECHA_CREACION>
+                    <FECHA_MODIFICACION>2024-04-22</FECHA_MODIFICACION>
                     <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
                 </parametros>
                 <etiquetas>
-                    <etiqueta>MESO1</etiqueta>
-                    <etiqueta>MESO2</etiqueta>
-                    <etiqueta>MESO3</etiqueta>
+                    <etiqueta>Cursos</etiqueta>
+                    <etiqueta>Notas</etiqueta>
+                    <etiqueta>Mate</etiqueta>
                 </etiquetas>
-                <componentes ID="$comp">
+            </pagina>
+            <pagina ID="$NUEVA">
+                <parametros>
+                    <SITIO>$MOMOS</SITIO>
+                    <PADRE>Index</PADRE>
+                    <TITULO>ParaByfer</TITULO>
+                    <USUARIO_CREACION>Byron Torres</USUARIO_CREACION>
+                    <FECHA_CREACION>2024-04-22</FECHA_CREACION>
+                    <FECHA_MODIFICACION>2024-04-22</FECHA_MODIFICACION>
+                    <USUARIO_MODIFICACION>Byron</USUARIO_MODIFICACION>
+                </parametros>
+                <etiquetas>
+                    <etiqueta>etiqueta1</etiqueta>
+                    <etiqueta>etiqueta2</etiqueta>
+                    <etiqueta>etiqueta3</etiqueta>
+                </etiquetas>
+                <componentes ID="$$comp-1">
                     <parametros>
-                        <PAGINA>$MESO</PAGINA>
+                        <PAGINA>$NUEVA</PAGINA>
                         <CLASE>TITULO</CLASE>
                     </parametros>
                     <atributos>
-                        <TEXTO>Este es el texto que aparece en la pagina Mesoamericana</TEXTO>
+                        <TEXTO>Este es el texto que aparece en el titulo :)</TEXTO>
                         <COLOR>#5A5A5A</COLOR>
-                    </atributos>
-                </componentes>
-                <componentes ID="$comp">
-                    <parametros>
-                        <PAGINA>$MESO</PAGINA>
-                        <CLASE>PARRAFO</CLASE>
-                    </parametros>
-                    <atributos>
-                        <TEXTO>Este es el EL PARRAGO que aparece en la pagina Mesoamericana</TEXTO>
-                        <ALINEACION>CENTRAR</ALINEACION>
-                        <COLOR>#5A5A5A</COLOR>
-                    </atributos>
-                </componentes>
-                <componentes ID="$comp">
-                    <parametros>
-                        <PAGINA>$MESO</PAGINA>
-                        <CLASE>VIDEO</CLASE>
-                    </parametros>
-                    <atributos>
-                        <ANCHO>120</ANCHO>
-                        <ALTURA>75</ALTURA>
-                        <ORIGEN>/home/tuxrex/Descargas/metodo_arbol.mp4</ORIGEN>
-                    </atributos>
-                </componentes>
-                <componentes ID="$comp">
-                    <parametros>
-                        <PAGINA>$MESO</PAGINA>
-                        <CLASE>IMAGEN</CLASE>
-                    </parametros>
-                    <atributos>
-                        <ANCHO>320</ANCHO>
-                        <ALTURA>275</ALTURA>
-                        <ORIGEN>/home/tuxrex/Descargas/dragon.jpeg</ORIGEN>
                     </atributos>
                 </componentes>
             </pagina>

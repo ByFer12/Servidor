@@ -6,6 +6,7 @@ package com.server;
 
 import com.server.XmlToHtml.ConvertXmlHtml;
 import com.server.errores.createXml;
+import com.server.servidorWeb.WebServer;
 import com.server.sockets.ServidorSer;
 import com.server.xmlflexcup.XmlAnalyzer;
 import com.server.xmlflexcup.parser;
@@ -23,7 +24,11 @@ import java.net.Socket;
 public class Servidor {
 
     public static void main(String[] args) throws Exception {
+       //convirtiendo el xml a html
         ConvertXmlHtml.convertXmlToHtml();
+        //iniciando el servidor
+            WebServer.ServerPage();
+
         try {
             createXml.createXml();
             ServerSocket  server=new ServerSocket(10000);
@@ -32,7 +37,7 @@ public class Servidor {
                 Thread hilo=new Thread(new ServidorSer(cliente));
                 hilo.start();
             }
-        } catch (IOException ex) {
+        } catch (IOException  ex) {
             ex.printStackTrace();
         }
     }

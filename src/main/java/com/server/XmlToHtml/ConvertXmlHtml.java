@@ -40,7 +40,8 @@ public class ConvertXmlHtml {
 
     private static void procesarSitio(Element site) throws IOException {
         String idSite = site.getAttribute("ID");
-        File carpeta = new File(idSite);
+
+        File carpeta = new File("Sitios/"+idSite);
         carpeta.mkdir();
         NodeList lista = site.getElementsByTagName("pagina");
         for (int i = 0; i < lista.getLength(); i++) {
@@ -55,7 +56,7 @@ public class ConvertXmlHtml {
 
     private static void procesarPagina(String idSite, Element pagina) throws IOException {
         String idPage = pagina.getAttribute("ID").substring(1);
-        File htmlFile = new File(idSite + "/" + idPage + ".html");
+        File htmlFile = new File("Sitios/"+idSite + "/" + idPage + ".html");
         FileWriter htmlWriter = new FileWriter(htmlFile);
 
         String titulo = obtenerContenido(pagina, "TITULO");
